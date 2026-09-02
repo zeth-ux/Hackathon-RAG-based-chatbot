@@ -1,0 +1,260 @@
+:root {
+  --green-900: #0b3d32;
+  --green-700: #145c4c;
+  --green-500: #1f7a66;
+  --gold: #c4a35a;
+  --gold-soft: #e8d5a3;
+  --cream: #f6f0e4;
+  --paper: #fffdf8;
+  --ink: #1c1914;
+  --muted: #5c574e;
+  --error: #8f2d2d;
+  --shadow: 0 12px 40px rgba(11, 61, 50, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at top, rgba(196, 163, 90, 0.18), transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(20, 92, 76, 0.04) 0 12px,
+      transparent 12px 24px
+    );
+}
+
+.site-header {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 0.5rem;
+}
+
+.brand {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.crescent {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green-900);
+  color: var(--gold-soft);
+  font-size: 1.4rem;
+}
+
+h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.7rem;
+  margin: 0;
+  color: var(--green-900);
+}
+
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2rem;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.intro-card,
+.chat-panel {
+  background: var(--paper);
+  border: 1px solid rgba(196, 163, 90, 0.35);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.intro-card {
+  padding: 1.25rem 1.3rem 1.4rem;
+}
+
+.intro-card h2 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.2rem;
+  margin: 0 0 0.6rem;
+  color: var(--green-700);
+}
+
+.intro-card p,
+.hints {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hints {
+  padding-left: 1.1rem;
+  margin: 0.8rem 0;
+}
+
+.note {
+  font-size: 0.85rem;
+  background: rgba(31, 122, 102, 0.08);
+  border-left: 3px solid var(--gold);
+  padding: 0.6rem 0.75rem;
+}
+
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: var(--green-700);
+  color: #fff;
+}
+
+.msg.assistant {
+  align-self: flex-start;
+  background: #f3efe4;
+  border: 1px solid rgba(20, 92, 76, 0.08);
+}
+
+.msg.loading,
+.msg.error {
+  align-self: flex-start;
+}
+
+.msg.error {
+  background: #f8eaea;
+  color: var(--error);
+}
+
+.sources {
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed rgba(196, 163, 90, 0.7);
+}
+
+.sources h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--green-700);
+}
+
+.sources ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.composer {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-top: 1px solid rgba(196, 163, 90, 0.3);
+}
+
+textarea {
+  flex: 1;
+  resize: vertical;
+  min-height: 52px;
+  max-height: 160px;
+  border: 1px solid rgba(20, 92, 76, 0.2);
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+}
+
+button {
+  background: var(--green-700);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 1.15rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.form-error {
+  margin: 0 0.9rem 0.8rem;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+footer {
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-panel {
+    min-height: 60vh;
+  }
+
+  .msg {
+    max-width: 95%;
+  }
+}

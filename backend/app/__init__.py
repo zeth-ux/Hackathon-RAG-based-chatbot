@@ -1,0 +1,1 @@
+"""Seerah RAG Assistant backend."""

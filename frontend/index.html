@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seerah RAG Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-pattern" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="brand">
+        <span class="crescent" aria-hidden="true">☪</span>
+        <div>
+          <h1>Seerah RAG Assistant</h1>
+          <p class="tagline">Answers grounded only in curated Seerah sources</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="intro-card">
+        <h2>Ask about the Prophet’s life ﷺ</h2>
+        <p>
+          This assistant retrieves excerpts from named Seerah texts, then answers
+          using those excerpts only. If the sources do not cover your question, it
+          will say so instead of guessing.
+        </p>
+        <ul class="hints">
+          <li>Where was the Prophet ﷺ born, and who raised him?</li>
+          <li>What happened at the cave of Hira?</li>
+          <li>Why did the Muslims migrate to Madinah?</li>
+          <li>What was the Treaty of Hudaybiyyah?</li>
+        </ul>
+        <p class="note">
+          First request after idle may take 30–60 seconds while a free-tier
+          backend wakes up.
+        </p>
+      </aside>
+
+      <section class="chat-panel" aria-label="Question and answer">
+        <div id="messages" class="messages" role="log" aria-live="polite"></div>
+        <form id="ask-form" class="composer">
+          <label class="sr-only" for="question">Your question</label>
+          <textarea
+            id="question"
+            name="question"
+            rows="2"
+            required
+            placeholder="Ask a question about the Seerah…"
+          ></textarea>
+          <button type="submit" id="submit-btn">Ask</button>
+        </form>
+        <p id="form-error" class="form-error" hidden></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Grounded Q&amp;A for learning Seerah. Not a fatwa service. Sources are
+        labelled under each answer.
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

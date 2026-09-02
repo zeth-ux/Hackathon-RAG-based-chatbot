@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+backend/.env
+backend/chroma_db/
+backend/.venv/
+*.egg-info/
+.idea/
+.vscode/

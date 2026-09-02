@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Seerah RAG Assistant architecture</title>
+  <desc id="desc">User question goes to the frontend, then FastAPI /ask, Chroma retrieval, Gemini generation, and a cited answer back to the user.</desc>
+  <rect width="920" height="360" fill="#f6f0e4"/>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <rect x="40" y="130" width="150" height="90" rx="12" fill="#145c4c"/>
+    <text x="115" y="172" fill="#fff" font-size="16" text-anchor="middle">Frontend</text>
+    <text x="115" y="194" fill="#e8d5a3" font-size="12" text-anchor="middle">HTML / CSS / JS</text>
+
+    <rect x="270" y="130" width="160" height="90" rx="12" fill="#0b3d32"/>
+    <text x="350" y="172" fill="#fff" font-size="16" text-anchor="middle">FastAPI /ask</text>
+    <text x="350" y="194" fill="#e8d5a3" font-size="12" text-anchor="middle">embed + retrieve</text>
+
+    <rect x="510" y="40" width="170" height="90" rx="12" fill="#1f7a66"/>
+    <text x="595" y="82" fill="#fff" font-size="16" text-anchor="middle">Chroma</text>
+    <text x="595" y="104" fill="#e8d5a3" font-size="12" text-anchor="middle">source chunks</text>
+
+    <rect x="510" y="220" width="170" height="90" rx="12" fill="#c4a35a"/>
+    <text x="595" y="262" fill="#0b3d32" font-size="16" text-anchor="middle">Gemini</text>
+    <text x="595" y="284" fill="#0b3d32" font-size="12" text-anchor="middle">grounded answer</text>
+
+    <rect x="760" y="130" width="130" height="90" rx="12" fill="#145c4c"/>
+    <text x="825" y="172" fill="#fff" font-size="16" text-anchor="middle">User</text>
+    <text x="825" y="194" fill="#e8d5a3" font-size="12" text-anchor="middle">answer + sources</text>
+
+    <path d="M190 175 H270" stroke="#0b3d32" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M430 155 L510 95" stroke="#0b3d32" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M430 195 L510 255" stroke="#0b3d32" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M680 175 H760" stroke="#0b3d32" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#0b3d32"/>
+    </marker>
+  </defs>
+</svg>
