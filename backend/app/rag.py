@@ -73,14 +73,18 @@ def generate_answer(question: str) -> tuple[str, list[str]]:
         return NO_COVERAGE_ANSWER, []
 
     prompt = build_prompt(question, hits)
+    print(f"DEBUG: calling Gemini model={GEMINI_MODEL!r} with key set={bool(GEMINI_API_KEY)}")
     try:
-        response = _client().models.generate_content(
+        client = _client()
+        response = client.models.generate_content(
             model=GEMINI_MODEL,
             contents=prompt,
         )
     except genai_errors.APIError as exc:
+        print(f"GEMINI ERROR (APIError): {exc!r}")
         raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
     except Exception as exc:
+        print(f"GEMINI ERROR (Exception): {exc!r}")
         raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
 
     answer = (response.text or "").strip()
