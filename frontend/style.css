@@ -327,3 +327,22 @@ footer {
     min-width: 150px;
   }
 }
+/* Additions on top of the earlier timeline CSS block */
+.timeline-card {
+  min-width: 210px;
+  max-width: 230px;
+}
+
+.timeline-card .blurb {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  .timeline-card {
+    min-width: 190px;
+    max-width: 210px;
+  }
+}
