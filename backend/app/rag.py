@@ -17,6 +17,7 @@ Rules:
 - If the excerpts do not contain enough information to answer, reply exactly with: I don't have information on that in my current sources.
 - Do not speculate, do not issue unsourced religious rulings, and do not invent quotations.
 - Write in clear English. Be respectful.
+- Write in plain text only. Do not use markdown formatting like asterisks or bullet symbols.
 
 Retrieved excerpts:
 {context}
