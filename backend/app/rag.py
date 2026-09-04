@@ -1,8 +1,13 @@
+import time
+
 from google import genai
 from google.genai import errors as genai_errors
 
 from app.config import GEMINI_API_KEY, GEMINI_MODEL, MAX_DISTANCE, TOP_K
 from app.vectorstore import get_collection
+
+MAX_RETRIES = 3
+RETRY_DELAY_SECONDS = 2
 
 PROMPT_TEMPLATE = """You are a careful Seerah assistant. You answer questions about the life of the Prophet Muhammad (peace be upon him) using ONLY the retrieved excerpts below.
 
@@ -74,18 +79,33 @@ def generate_answer(question: str) -> tuple[str, list[str]]:
 
     prompt = build_prompt(question, hits)
     print(f"DEBUG: calling Gemini model={GEMINI_MODEL!r} with key set={bool(GEMINI_API_KEY)}")
-    try:
-        client = _client()
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-        )
-    except genai_errors.APIError as exc:
-        print(f"GEMINI ERROR (APIError): {exc!r}")
-        raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
-    except Exception as exc:
-        print(f"GEMINI ERROR (Exception): {exc!r}")
-        raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
+
+    response = None
+    last_exc = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            client = _client()
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=prompt,
+            )
+            break
+        except genai_errors.ServerError as exc:
+            last_exc = exc
+            print(f"GEMINI ERROR (ServerError, attempt {attempt}/{MAX_RETRIES}): {exc!r}")
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_DELAY_SECONDS * attempt)
+        except genai_errors.APIError as exc:
+            print(f"GEMINI ERROR (APIError): {exc!r}")
+            raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
+        except Exception as exc:
+            print(f"GEMINI ERROR (Exception): {exc!r}")
+            raise RuntimeError("The language model is temporarily unavailable. Please try again shortly.") from exc
+
+    if response is None:
+        raise RuntimeError(
+            "The language model is experiencing high demand right now. Please try again shortly."
+        ) from last_exc
 
     answer = (response.text or "").strip()
     if not answer:

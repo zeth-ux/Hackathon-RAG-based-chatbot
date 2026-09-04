@@ -36,7 +36,7 @@ flowchart LR
 | Backend | FastAPI |
 | Vectors | Chroma (disk, no hosted DB) |
 | Embeddings | sentence-transformers `all-MiniLM-L6-v2` |
-| LLM | Google Gemini (`gemini-2.5-flash`) |
+| LLM | Google Gemini (`gemini-3.6-flash`) |
 | Frontend | HTML, CSS, JavaScript |
 | Hosting | Render (API) + Vercel (static UI) |
 
