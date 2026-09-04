@@ -89,3 +89,28 @@ input.addEventListener("keydown", (event) => {
     form.requestSubmit();
   }
 });
+// --- Timeline: renders cards from TIMELINE (timeline-data.js) and reuses
+// the existing question form + /ask flow. No new endpoint, no new logic
+// for answering — this only pre-fills and submits the same form above.
+function renderTimeline() {
+  const track = document.getElementById("timeline-track");
+  if (!track || typeof TIMELINE === "undefined") return;
+
+  TIMELINE.forEach((event, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "timeline-card";
+    card.innerHTML = `
+      <span class="step">${index + 1}</span>
+      <div class="title">${escapeHtml(event.title)}</div>
+    `;
+    card.addEventListener("click", () => {
+      input.value = event.question;
+      document.querySelector(".chat-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+      form.requestSubmit();
+    });
+    track.appendChild(card);
+  });
+}
+
+renderTimeline();
