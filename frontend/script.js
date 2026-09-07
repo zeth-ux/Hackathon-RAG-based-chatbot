@@ -219,3 +219,34 @@ if (siteNav) {
     siteNav.classList.toggle("scrolled", window.scrollY > 8);
   });
 }
+
+// --- Marginalia: rotating pull-quotes, one per source file, paraphrased
+// (not verbatim) from the actual seerah_sources content. Purely ambient.
+const MARGINALIA = [
+  "A shepherd trusted by his people, long before he carried a message.",
+  "Read — the first word of a revelation that changed everything.",
+  "Faith tested by hardship, sheltered by a foreign king's justice.",
+  "Two travellers, a hidden cave, and a new home ahead.",
+  "One written pact bound rival tribes into a single town.",
+  "Victory, loss, and a trench that held the line.",
+  "A truce that looked like surrender — and opened a city.",
+  "A husband, neighbor, and judge, patient even when wronged.",
+];
+
+(function runMarginalia() {
+  const el = document.getElementById("marginalia-text");
+  if (!el) return;
+
+  let i = 0;
+  function showNext() {
+    el.classList.remove("visible");
+    setTimeout(() => {
+      el.textContent = MARGINALIA[i];
+      el.classList.add("visible");
+      i = (i + 1) % MARGINALIA.length;
+    }, 400);
+  }
+
+  showNext();
+  setInterval(showNext, 6000);
+})();
