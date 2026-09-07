@@ -115,3 +115,107 @@ function renderTimeline() {
 }
 
 renderTimeline();
+// --- Quiz: simple state machine over QUIZ (quiz-data.js). No backend
+// calls — purely local, since correctness is fixed and pre-verified
+// against the source files, unlike the open-ended /ask flow above.
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function renderQuiz() {
+  const body = document.getElementById("quiz-body");
+  if (!body || typeof QUIZ === "undefined") return;
+
+  if (quizIndex >= QUIZ.length) {
+    body.innerHTML = `
+      <div class="quiz-card">
+        <p class="quiz-score">You scored ${quizScore} / ${QUIZ.length}</p>
+        <button type="button" class="quiz-option quiz-next" id="quiz-restart">Try again</button>
+      </div>
+    `;
+    document.getElementById("quiz-restart").addEventListener("click", () => {
+      quizIndex = 0;
+      quizScore = 0;
+      quizAnswered = false;
+      renderQuiz();
+    });
+    return;
+  }
+
+  const q = QUIZ[quizIndex];
+  quizAnswered = false;
+
+  const optionsHtml = q.options
+    .map((opt, i) => `<button type="button" class="quiz-option" data-index="${i}">${escapeHtml(opt)}</button>`)
+    .join("");
+
+  body.innerHTML = `
+    <div class="quiz-card">
+      <p class="quiz-progress">Question ${quizIndex + 1} of ${QUIZ.length}</p>
+      <p class="quiz-prompt">${escapeHtml(q.prompt)}</p>
+      <div class="quiz-options">${optionsHtml}</div>
+      <div id="quiz-feedback"></div>
+    </div>
+  `;
+
+  body.querySelectorAll(".quiz-option[data-index]").forEach((btn) => {
+    btn.addEventListener("click", () => handleQuizAnswer(Number(btn.dataset.index)));
+  });
+}
+
+function handleQuizAnswer(chosenIndex) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const q = QUIZ[quizIndex];
+  const buttons = document.querySelectorAll(".quiz-option[data-index]");
+  buttons.forEach((btn) => {
+    btn.disabled = true;
+    const i = Number(btn.dataset.index);
+    if (i === q.correctIndex) btn.classList.add("correct");
+    else if (i === chosenIndex) btn.classList.add("incorrect");
+  });
+
+  if (chosenIndex === q.correctIndex) quizScore += 1;
+
+  const feedback = document.getElementById("quiz-feedback");
+  feedback.innerHTML = `
+    <div class="quiz-explanation">
+      ${escapeHtml(q.explanation)}
+      <span class="source-label">Source: ${escapeHtml(q.source)}</span>
+    </div>
+    <button type="button" class="quiz-option quiz-next" id="quiz-next-btn">
+      ${quizIndex + 1 < QUIZ.length ? "Next question" : "See score"}
+    </button>
+  `;
+  document.getElementById("quiz-next-btn").addEventListener("click", () => {
+    quizIndex += 1;
+    renderQuiz();
+  });
+}
+
+renderQuiz();
+
+// --- Scroll reveal: watch every .reveal element, add .in-view once it
+// enters the viewport. Pure CSS transition handles the actual animation.
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+// --- Nav shadow once the page is scrolled ---
+const siteNav = document.querySelector(".site-nav");
+if (siteNav) {
+  window.addEventListener("scroll", () => {
+    siteNav.classList.toggle("scrolled", window.scrollY > 8);
+  });
+}

@@ -14,7 +14,12 @@
   </head>
   <body>
     <div class="bg-pattern" aria-hidden="true"></div>
-    <header class="site-header">
+     <nav class="site-nav" aria-label="Section navigation">
+      <a href="#timeline">Explore</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#ask">Ask</a>
+    </nav>
+    <header class="site-header hero">
       <div class="brand">
         <span class="crescent" aria-hidden="true">☪</span>
         <div>
@@ -24,7 +29,7 @@
       </div>
     </header>
 
-    <section class="timeline-panel" aria-label="Seerah timeline">
+    <section class="timeline-panel reveal" id="timeline" aria-label="Seerah timeline">
   <h2>Explore the Seerah timeline</h2>
   <p class="timeline-intro">Tap an event to ask the assistant about it — every answer is pulled from the sources, not written in advance.</p>
   <div id="timeline-track" class="timeline-track"></div>
@@ -51,7 +56,7 @@
         </p>
       </aside>
 
-      <section class="chat-panel" aria-label="Question and answer">
+      <section class="chat-panel reveal" id="ask" aria-label="Question and answer">
         <div id="messages" class="messages" role="log" aria-live="polite"></div>
         <form id="ask-form" class="composer">
           <label class="sr-only" for="question">Your question</label>
@@ -67,7 +72,11 @@
         <p id="form-error" class="form-error" hidden></p>
       </section>
     </main>
-
+<section class="quiz-panel reveal" id="quiz" aria-label="Seerah quiz">
+  <h2>Test what you've learned</h2>
+  <p class="quiz-intro">Eight questions, grounded in the same sources the assistant uses.</p>
+  <div id="quiz-body"></div>
+</section>
     <footer>
       <p>
         Grounded Q&amp;A for learning Seerah. Not a fatwa service. Sources are
@@ -75,6 +84,7 @@
       </p>
     </footer>
     <script src="timeline-data.js"></script>
+    <script src="quiz-data.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
