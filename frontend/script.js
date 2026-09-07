@@ -1,7 +1,7 @@
 const API_BASE =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8000"
-    : "https://YOUR-RENDER-SERVICE.onrender.com";
+    : "https://hackathon-rag-based-chatbot.onrender.com";
 
 const form = document.getElementById("ask-form");
 const input = document.getElementById("question");

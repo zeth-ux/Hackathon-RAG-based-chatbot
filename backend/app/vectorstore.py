@@ -1,11 +1,28 @@
 import chromadb
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+from chromadb import Documents, EmbeddingFunction, Embeddings
+from google import genai
 
-from app.config import CHROMA_PATH, COLLECTION_NAME, EMBEDDING_MODEL
+from app.config import CHROMA_PATH, COLLECTION_NAME, GEMINI_API_KEY
+
+EMBEDDING_MODEL = "gemini-embedding-001"
+
+
+class GeminiEmbeddingFunction(EmbeddingFunction):
+    def __init__(self):
+        if not GEMINI_API_KEY:
+            raise RuntimeError("GEMINI_API_KEY is not set")
+        self.client = genai.Client(api_key=GEMINI_API_KEY)
+
+    def __call__(self, input: Documents) -> Embeddings:
+        result = self.client.models.embed_content(
+            model=EMBEDDING_MODEL,
+            contents=input,
+        )
+        return [embedding.values for embedding in result.embeddings]
 
 
 def embedding_function():
-    return SentenceTransformerEmbeddingFunction(model_name=EMBEDDING_MODEL)
+    return GeminiEmbeddingFunction()
 
 
 def client():
